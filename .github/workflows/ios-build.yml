@@ -1,0 +1,57 @@
+name: iOS Build
+
+on:
+  workflow_dispatch:  # Manually triggered workflow
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set up Flutter
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "stable"
+
+      # Ensure CocoaPods is installed
+      - name: Install CocoaPods
+        run: |
+          sudo gem install cocoapods
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          cd ios
+          pod install
+          cd ..
+
+      # Build the iOS app
+      - name: Build iOS App
+        run: |
+          flutter build ios --release --no-codesign
+
+      # Create the IPA file
+      - name: Create IPA
+        run: |
+          xcodebuild -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -sdk iphoneos \
+            -configuration Release \
+            archive -archivePath $PWD/build/Runner.xcarchive
+          xcodebuild -exportArchive \
+            -archivePath $PWD/build/Runner.xcarchive \
+            -exportOptionsPlist ios/Flutter/ExportOptions.plist \
+            -exportPath $PWD/build/IPA
+
+      # Upload the IPA as an artifact
+      - name: Upload IPA
+        uses: actions/upload-artifact@v3
+        with:
+          name: ios-ipa
+          path: build/IPA
