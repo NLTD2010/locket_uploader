@@ -5,7 +5,7 @@ on:
 
 jobs:
   build-ios:
-    runs-on: macos-12  # Run on macOS, forcing x86_64 architecture
+    runs-on: macos-12
     strategy:
       matrix:
         architecture: [x86_64]
@@ -15,11 +15,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Set up Flutter with a specific version
+      # Set up Flutter with a specific version that includes Dart SDK >= 3.4.3
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.10.0'  # Specify exact Flutter version
+          flutter-version: '3.13.0'  # Use Flutter version that includes Dart >= 3.4.3
 
       # Ensure CocoaPods is installed
       - name: Install CocoaPods
