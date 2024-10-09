@@ -42,7 +42,7 @@ jobs:
       # Create the IPA file
       - name: Create IPA
         run: | 
-          cd iphoneos
+          cd build/ios/iphoneos
           mkdir Payload
           mv Runner.app Payload/
           zip -r LocketUploader.ipa Payload
