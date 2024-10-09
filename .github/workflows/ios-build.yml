@@ -41,20 +41,15 @@ jobs:
 
       # Create the IPA file
       - name: Create IPA
-        run: |
-          xcodebuild -workspace ios/Runner.xcworkspace \
-            -scheme Runner \
-            -sdk iphoneos \
-            -configuration Release \
-            archive -archivePath $PWD/build/Runner.xcarchive
-          xcodebuild -exportArchive \
-            -archivePath $PWD/build/Runner.xcarchive \
-            -exportOptionsPlist ios/Flutter/ExportOptions.plist \
-            -exportPath $PWD/build/IPA CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+        run: | 
+          cd iphoneos
+          mkdir Payload
+          mv Runner.app Payload/
+          zip -r LocketUploader.ipa Payload
 
       # Upload the IPA as an artifact
       - name: Upload IPA
         uses: actions/upload-artifact@v3
         with:
           name: ios-ipa
-          path: build/IPA
+          path: iphoneos/LocketUploader.ipa
