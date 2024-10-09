@@ -19,7 +19,7 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.0'  # Use Flutter version that includes Dart >= 3.4.3
+          flutter-version: '3.24.3'  # Use Flutter version that includes Dart >= 3.4.3
 
       # Ensure CocoaPods is installed
       - name: Install CocoaPods
