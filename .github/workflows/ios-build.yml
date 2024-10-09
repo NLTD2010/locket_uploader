@@ -5,18 +5,21 @@ on:
 
 jobs:
   build-ios:
-    runs-on: macos-latest
+    runs-on: macos-12  # Run on macOS, forcing x86_64 architecture
+    strategy:
+      matrix:
+        architecture: [x86_64]
 
     steps:
       # Checkout the code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Set up Flutter
+      # Set up Flutter with a specific version
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "stable"
+          flutter-version: '3.10.0'  # Specify exact Flutter version
 
       # Ensure CocoaPods is installed
       - name: Install CocoaPods
