@@ -50,7 +50,7 @@ jobs:
           xcodebuild -exportArchive \
             -archivePath $PWD/build/Runner.xcarchive \
             -exportOptionsPlist ios/Flutter/ExportOptions.plist \
-            -exportPath $PWD/build/IPA
+            -exportPath $PWD/build/IPA CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
       # Upload the IPA as an artifact
       - name: Upload IPA
