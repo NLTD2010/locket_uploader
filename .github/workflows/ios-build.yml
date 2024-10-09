@@ -35,7 +35,7 @@ jobs:
           cd ..
 
       # Build the iOS app
-      - name: Build iOS App
+      - name: Build App
         run: |
           flutter build ios --release --no-codesign
 
@@ -44,12 +44,12 @@ jobs:
         run: | 
           cd build/ios/iphoneos
           mkdir Payload
-          mv Runner.app Payload/
+          cp -r Runner.app Payload/
           zip -r LocketUploader.ipa Payload
 
       # Upload the IPA as an artifact
       - name: Upload IPA
         uses: actions/upload-artifact@v3
         with:
-          name: ios-ipa
-          path: LocketUploader.ipa
+          name: LocketUploader.ipa
+          path: .
