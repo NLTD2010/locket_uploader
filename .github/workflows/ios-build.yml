@@ -34,6 +34,11 @@ jobs:
           pod install
           cd ..
 
+      # Clean previous builds (optional but recommended)
+      - name: Clean Build
+        run: |
+          flutter clean
+
       # Build the iOS app
       - name: Build App
         run: |
@@ -52,4 +57,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: LocketUploader.ipa
-          path: .
+          path: build/ios/iphoneos/LocketUploader.ipa
